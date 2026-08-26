@@ -1,8 +1,8 @@
 ---
-# DarTec — the official DarTec Smart Homes theme for Home Assistant.
-# Derived from the DarTec design tokens: teal primary, copper accent,
+# Dartec — the official Dartec Smart Homes theme for Home Assistant.
+# Derived from the Dartec design tokens: teal primary, copper accent,
 # warm ink/cream neutrals. Supports light and dark modes.
-DarTec:
+Dartec:
   # Shared identity
   primary-color: "#1a6b6b"
   accent-color: "#a8551f"
@@ -19,7 +19,7 @@ DarTec:
   paper-font-caption_-_font-family: "var(--primary-font-family)"
   paper-font-title_-_font-family: "var(--primary-font-family)"
 
-  # Shape — tight radii, matching the DarTec system
+  # Shape — tight radii, matching the Dartec system
   ha-card-border-radius: "8px"
   ha-dialog-border-radius: "10px"
 
