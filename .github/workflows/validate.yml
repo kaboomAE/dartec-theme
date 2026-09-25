@@ -1,0 +1,38 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contrast:
+    name: Themes parse and pass WCAG AA
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - run: python scripts/contrast.py
+      - name: LICENSE is present
+        run: test -s LICENSE
+
+  hacs:
+    name: HACS
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hacs/action@main
+        with:
+          category: theme
+          # A custom repository, not in the HACS default list: topics, brands
+          # and README images are only required there. HACS reads the licence
+          # from GitHub's API for the default branch, which a pull request
+          # cannot change, so on pull requests the job above checks LICENSE
+          # and HACS checks it again on main.
+          ignore: ${{ github.event_name == 'pull_request' && 'brands topics images license' || 'brands topics images' }}
