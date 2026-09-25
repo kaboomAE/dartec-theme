@@ -11,10 +11,11 @@
 # scripts/contrast.py. Copper is not used: the brand reserves it for content
 # written by AI.
 #
-# Fonts: 'Dartec Dubai' (Latin), 'Dartec Lateef' (Arabic) and 'Dartec Plex
-# Mono' render only where a page loads them (kaboomAE/dartec-ha-manager#59).
-# Until then the stack falls through to Roboto, which Home Assistant ships
-# itself, and to the device's own font for Arabic.
+# Fonts: 'Dartec Lateef' (Arabic only) and 'Dartec Plex Mono' render only where
+# a page loads them (kaboomAE/dartec-ha-manager#59). Latin text is Roboto, which
+# Home Assistant ships itself; until Lateef loads, Arabic uses the device's own
+# font. Dubai, the brand's Latin face, is not named: its licence does not allow
+# it to be redistributed.
 
 # ── Dartec ───────────────────────────────────────────────────────────────────
 Dartec:
@@ -24,8 +25,8 @@ Dartec:
   light-primary-color: "#e6f0f0"
 
   # Type (Home Assistant 2025.5 and later read these, not paper-font-*)
-  ha-font-family-body: "'Dartec Dubai', 'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
-  ha-font-family-heading: "'Dartec Dubai', 'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
+  ha-font-family-body: "'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
+  ha-font-family-heading: "'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
   ha-font-family-code: "'Dartec Plex Mono', 'IBM Plex Mono', ui-monospace, Menlo, Consolas, 'Liberation Mono', monospace"
 
   # Shape: tight radii, matching the Dartec system
@@ -105,8 +106,8 @@ Dartec Graphite:
   dark-primary-color: "#0f4f4f"
   light-primary-color: "#e6f0f0"
 
-  ha-font-family-body: "'Dartec Dubai', 'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
-  ha-font-family-heading: "'Dartec Dubai', 'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
+  ha-font-family-body: "'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
+  ha-font-family-heading: "'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
   ha-font-family-code: "'Dartec Plex Mono', 'IBM Plex Mono', ui-monospace, Menlo, Consolas, 'Liberation Mono', monospace"
 
   ha-card-border-radius: "8px"

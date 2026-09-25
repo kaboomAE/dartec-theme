@@ -30,7 +30,7 @@ Requires Home Assistant 2025.5 or later, the first release that reads the `ha-fo
 
 ## Fonts
 
-Both themes name Dartec's brand faces first: Dubai for Latin, Lateef for Arabic, and IBM Plex Mono for code. A theme can name a font but cannot load one, so they appear only on pages that load them. Everywhere else the text falls through to Roboto, which Home Assistant ships itself, and Arabic to the device's own font.
+Both themes name Dartec's Arabic face, Lateef, and IBM Plex Mono for code. A theme can name a font but cannot load one, so these appear only on pages that load them; until then Arabic uses the device's own font. Latin text is Roboto, which Home Assistant ships itself. Dubai, the brand's Latin face, is not used: its licence does not allow it to be redistributed.
 
 ## Licence
 
