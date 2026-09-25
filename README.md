@@ -12,6 +12,25 @@ The official [Dartec Smart Homes](https://dartec.ae) themes for Home Assistant, 
 - **WCAG AA in both modes.** Text is at least 4.5:1 and icons and controls at least 3:1, checked on every change by [`scripts/contrast.py`](scripts/contrast.py).
 - **No copper.** The Dartec brand reserves copper for content written by AI.
 
+## Screenshots
+
+Home Assistant 2026.9 on Dartec's test bench, with the themes installed through HACS.
+
+**Dartec**, light and dark, in English and Arabic:
+
+| Light | Dark |
+|---|---|
+| ![Dartec, light](docs/screenshots/dartec-overview-light-en.webp) | ![Dartec, dark](docs/screenshots/dartec-overview-dark-en.webp) |
+| ![Dartec, light, Arabic](docs/screenshots/dartec-overview-light-ar.webp) | ![Dartec, dark, Arabic](docs/screenshots/dartec-overview-dark-ar.webp) |
+| ![Dartec, device states, light](docs/screenshots/dartec-states-light.webp) | ![Dartec, device states, dark](docs/screenshots/dartec-states-dark.webp) |
+
+**Dartec Graphite**:
+
+| Light | Dark |
+|---|---|
+| ![Dartec Graphite, light](docs/screenshots/graphite-overview-light-en.webp) | ![Dartec Graphite, dark](docs/screenshots/graphite-overview-dark-en.webp) |
+| ![Dartec Graphite, device states, light](docs/screenshots/graphite-states-light.webp) | ![Dartec Graphite, dark, Arabic](docs/screenshots/graphite-overview-dark-ar.webp) |
+
 ## Install
 
 Homes managed by Dartec HA Manager receive these themes automatically. To install them by hand:
