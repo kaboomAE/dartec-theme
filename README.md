@@ -1,10 +1,11 @@
 # Dartec Theme
 
-The official [Dartec Smart Homes](https://dartec.ae) theme for Home Assistant: brand teal on warm cream and paper, with light and dark modes in one theme.
+The official [Dartec Smart Homes](https://dartec.ae) themes for Home Assistant, each with light and dark modes in one theme.
 
 | Theme | What it is |
 |---|---|
-| **Dartec** | The house theme. Teal for everything interactive, a readable gold for lights that are on. |
+| **Dartec** | The house theme: brand teal on warm cream and paper. Teal for everything interactive, a readable gold for lights that are on. |
+| **Dartec Graphite** | Quiet warm-graphite surfaces with grey icons, and teal only where something is on. The theme for wall panels, and in dark mode for bedrooms at night. |
 
 - **Light and dark** are both written in full; Home Assistant follows the device's setting.
 - **Theme variables only.** No card-mod, no JavaScript, no images, nothing downloaded.
@@ -13,7 +14,7 @@ The official [Dartec Smart Homes](https://dartec.ae) theme for Home Assistant: b
 
 ## Install
 
-Homes managed by Dartec HA Manager receive this theme automatically. To install it by hand:
+Homes managed by Dartec HA Manager receive these themes automatically. To install them by hand:
 
 1. HACS → ⋮ → Custom repositories → add this repository (category: **Theme**), then download it.
 2. Make sure `configuration.yaml` contains:
@@ -21,7 +22,7 @@ Homes managed by Dartec HA Manager receive this theme automatically. To install 
    frontend:
      themes: !include_dir_merge_named themes
    ```
-3. Restart Home Assistant, then pick **Dartec** in your profile, or let your Dartec installer set it for the home.
+3. Restart Home Assistant, then pick **Dartec** or **Dartec Graphite** in your profile, or let your Dartec installer set it for the home.
 
 Since Home Assistant 2026.2, a theme chosen in a person's own profile overrides the home's default theme.
 
@@ -29,7 +30,7 @@ Requires Home Assistant 2025.5 or later, the first release that reads the `ha-fo
 
 ## Fonts
 
-The theme names Dartec's brand faces first: Dubai for Latin, Lateef for Arabic, and IBM Plex Mono for code. A theme can name a font but cannot load one, so they appear only on pages that load them. Everywhere else the text falls through to Roboto, which Home Assistant ships itself, and Arabic to the device's own font.
+Both themes name Dartec's brand faces first: Dubai for Latin, Lateef for Arabic, and IBM Plex Mono for code. A theme can name a font but cannot load one, so they appear only on pages that load them. Everywhere else the text falls through to Roboto, which Home Assistant ships itself, and Arabic to the device's own font.
 
 ## Licence
 
