@@ -1,49 +1,55 @@
 ---
-# Dartec — the official Dartec Smart Homes theme for Home Assistant.
-# Derived from the Dartec design tokens: teal primary, copper accent,
-# warm ink/cream neutrals. Supports light and dark modes.
+# The Dartec Smart Homes theme for Home Assistant: teal on warm cream and paper.
+#
+# Homes store their default theme by name, so the name never changes. The
+# theme sets light and dark in full, uses theme variables only (no card-mod,
+# no JavaScript, no images), and passes WCAG AA in both modes: see
+# scripts/contrast.py. Copper is not used: the brand reserves it for content
+# written by AI.
+#
+# Fonts: 'Dartec Dubai' (Latin), 'Dartec Lateef' (Arabic) and 'Dartec Plex
+# Mono' render only where a page loads them (kaboomAE/dartec-ha-manager#59).
+# Until then the stack falls through to Roboto, which Home Assistant ships
+# itself, and to the device's own font for Arabic.
+
+# ── Dartec ───────────────────────────────────────────────────────────────────
 Dartec:
-  # Shared identity
   primary-color: "#1a6b6b"
-  accent-color: "#a8551f"
+  accent-color: "#1a6b6b"
   dark-primary-color: "#0f4f4f"
   light-primary-color: "#e6f0f0"
 
-  # Type
-  primary-font-family: "'IBM Plex Sans', system-ui, 'Segoe UI', sans-serif"
-  paper-font-common-base_-_font-family: "var(--primary-font-family)"
-  paper-font-common-code_-_font-family: "'IBM Plex Mono', ui-monospace, monospace"
-  paper-font-body1_-_font-family: "var(--primary-font-family)"
-  paper-font-subhead_-_font-family: "var(--primary-font-family)"
-  paper-font-headline_-_font-family: "var(--primary-font-family)"
-  paper-font-caption_-_font-family: "var(--primary-font-family)"
-  paper-font-title_-_font-family: "var(--primary-font-family)"
+  # Type (Home Assistant 2025.5 and later read these, not paper-font-*)
+  ha-font-family-body: "'Dartec Dubai', 'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
+  ha-font-family-heading: "'Dartec Dubai', 'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
+  ha-font-family-code: "'Dartec Plex Mono', 'IBM Plex Mono', ui-monospace, Menlo, Consolas, 'Liberation Mono', monospace"
 
-  # Shape — tight radii, matching the Dartec system
+  # Shape: tight radii, matching the Dartec system
   ha-card-border-radius: "8px"
   ha-dialog-border-radius: "10px"
 
-  # State colors
-  state-icon-color: "var(--primary-color)"
-  paper-item-icon-active-color: "#a8551f"
-
   modes:
     light:
-      primary-background-color: "#f5f5f0"      # dartec cream
+      primary-background-color: "#f5f5f0"      # cream
       secondary-background-color: "#ebe9df"    # cream dim
       card-background-color: "#fffdf8"         # paper
       primary-text-color: "#22251f"            # ink
       secondary-text-color: "#52564c"          # ink soft
       disabled-text-color: "#666a5c"
-      divider-color: "#ddd6c4"                 # accent soft
+      divider-color: "#ddd6c4"                 # tan
       ha-card-border-color: "#ddd6c4"
-      primary-color: "#1a6b6b"
-      accent-color: "#a8551f"
+      primary-color: "#1a6b6b"                 # teal
+      accent-color: "#1a6b6b"
+      text-primary-color: "#ffffff"            # text on teal
       state-active-color: "#1a6b6b"
-      switch-checked-color: "#1a6b6b"
-      slider-color: "#1a6b6b"
+      state-icon-color: "#1a6b6b"
+      state-climate-cool-color: "#1a6b6b"
+      state-climate-dry-color: "#8a6a12"
+      state-climate-fan_only-color: "#0f4f4f"
+      state-light-on-color: "#a88400"          # gold, never copper
+      state-switch-on-color: "#1a6b6b"
+      state-cover-active-color: "#1a6b6b"
       slider-track-color: "#ddd6c4"
-      label-badge-red: "#dc2626"
       error-color: "#dc2626"
       warning-color: "#d97706"
       success-color: "#047857"
@@ -55,23 +61,26 @@ Dartec:
       sidebar-selected-text-color: "#1a6b6b"
 
     dark:
-      primary-background-color: "#17181a"      # dartec dark ground
-      secondary-background-color: "#212328"    # cream dim (dark)
-      card-background-color: "#1e2024"         # paper (dark)
-      primary-text-color: "#e8e6df"            # ink (dark)
-      secondary-text-color: "#a8a79e"          # ink soft (dark)
+      primary-background-color: "#17181a"      # dark ground
+      secondary-background-color: "#212328"
+      card-background-color: "#1e2024"
+      primary-text-color: "#e8e6df"
+      secondary-text-color: "#a8a79e"
       disabled-text-color: "#85857c"
       divider-color: "#3a3a38"
       ha-card-border-color: "#3a3a38"
-      primary-color: "#4db3ac"                 # teal (dark)
-      accent-color: "#e08b52"                  # copper (dark)
+      primary-color: "#4db3ac"                 # teal, lifted for dark
+      accent-color: "#4db3ac"
+      text-primary-color: "#17181a"            # text on light teal: ink, not white
       state-active-color: "#4db3ac"
       state-icon-color: "#4db3ac"
-      paper-item-icon-active-color: "#e08b52"
-      switch-checked-color: "#4db3ac"
-      slider-color: "#4db3ac"
+      state-climate-cool-color: "#4db3ac"
+      state-climate-dry-color: "#d9b44a"
+      state-climate-fan_only-color: "#7fd0c9"
+      state-light-on-color: "#facc15"
+      state-switch-on-color: "#4db3ac"
+      state-cover-active-color: "#4db3ac"
       slider-track-color: "#3a3a38"
-      label-badge-red: "#f87171"
       error-color: "#f87171"
       warning-color: "#fbbf24"
       success-color: "#34d399"
