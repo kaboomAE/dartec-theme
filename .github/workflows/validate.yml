@@ -19,6 +19,7 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install pyyaml
+      - run: python scripts/check_themes.py
       - run: python scripts/contrast.py
       - name: LICENSE is present
         run: test -s LICENSE
