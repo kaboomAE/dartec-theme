@@ -4,10 +4,16 @@
 #   Dartec           the house theme: teal on warm cream and paper.
 #   Dartec Graphite  quiet neutral surfaces, teal only where something is on.
 #                    The panel and night theme.
+#   Dartec Glass     frosted cards over a teal gradient ground. Blur is costly
+#                    to draw: not for wall panels.
+#   Dartec Glass Lite  Glass without blur or transparency, for wall panels and
+#                    slower tablets.
+#   Dartec Soft      borderless paper cards with a soft shadow.
+#   Dartec Material  tonal surfaces generated from the brand teal.
 #
-# Homes store their default theme by name, so these names never change. Both
-# themes set light and dark in full, use theme variables only (no card-mod, no
-# JavaScript, no images), and pass WCAG AA in both modes: see
+# Homes store their default theme by name, so these names never change. Every
+# theme sets light and dark in full, uses theme variables only (no card-mod, no
+# JavaScript, no images), and passes WCAG AA in both modes: see
 # scripts/contrast.py. Copper is not used: the brand reserves it for content
 # written by AI.
 #
@@ -176,3 +182,341 @@ Dartec Graphite:
       sidebar-selected-icon-color: "#5fb8b1"
       sidebar-selected-text-color: "#5fb8b1"
       code-editor-background-color: "#121314"
+
+# ── Dartec Glass ─────────────────────────────────────────────────────────────
+# Frosted cards over a teal gradient ground: ha-card-background is translucent
+# and ha-card-backdrop-filter blurs what is behind it. The ground is a gradient,
+# not a photograph, so nothing is downloaded. Contrast is measured on the card
+# blended over every colour of the gradient, worst case. Drawn without a GPU,
+# the blur multiplied the drawing work about elevenfold: wall panels take Glass
+# Lite.
+# The top bar stays solid.
+Dartec Glass:
+  primary-color: "#1a6b6b"
+  accent-color: "#1a6b6b"
+  dark-primary-color: "#0f4f4f"
+  light-primary-color: "#e6f0f0"
+
+  ha-font-family-body: "'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
+  ha-font-family-heading: "'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
+  ha-font-family-code: "'Dartec Plex Mono', 'IBM Plex Mono', ui-monospace, Menlo, Consolas, 'Liberation Mono', monospace"
+
+  # Glass reads as glass only with soft edges: a step up from the brand's 8px
+  ha-card-border-radius: "14px"
+  ha-dialog-border-radius: "16px"
+  ha-card-border-width: "1px"
+
+  modes:
+    light:
+      lovelace-background: "linear-gradient(165deg, #d7e8e7 0%, #eef2ee 45%, #ebe9df 100%)"
+      primary-background-color: "#eef2ee"
+      secondary-background-color: "#e3e9e5"
+      app-header-background-color: "#e3ecea"
+      app-header-text-color: "#22251f"
+      card-background-color: "#f7f8f4"         # dialogs and pop-ups: solid
+      ha-card-background: "rgba(255, 253, 248, 0.62)"
+      ha-card-backdrop-filter: "blur(16px) saturate(120%)"
+      ha-card-border-color: "rgba(143, 131, 104, 0.28)"
+      ha-card-box-shadow: "0 1px 2px rgba(15, 79, 79, 0.06), 0 10px 30px rgba(15, 79, 79, 0.08)"
+      primary-text-color: "#1d211c"
+      secondary-text-color: "#4a4f45"
+      disabled-text-color: "#61655a"
+      divider-color: "rgba(143, 131, 104, 0.35)"
+      primary-color: "#1a6b6b"
+      accent-color: "#1a6b6b"
+      text-primary-color: "#ffffff"
+      state-active-color: "#1a6b6b"
+      state-icon-color: "#1a6b6b"
+      state-climate-cool-color: "#1a6b6b"
+      state-climate-dry-color: "#8a6a12"
+      state-climate-fan_only-color: "#0f4f4f"
+      state-light-on-color: "#a88400"
+      state-switch-on-color: "#1a6b6b"
+      state-cover-active-color: "#1a6b6b"
+      error-color: "#dc2626"
+      warning-color: "#c96e05"          # #d97706 is 2.89:1 on glass over the ground
+      success-color: "#047857"
+      info-color: "#1a6b6b"
+      sidebar-background-color: "#eef2ee"
+      sidebar-selected-icon-color: "#1a6b6b"
+      sidebar-selected-text-color: "#1a6b6b"
+
+    dark:
+      lovelace-background: "radial-gradient(120% 90% at 15% 0%, #164645 0%, #0e3030 45%, #0d1214 100%)"
+      primary-background-color: "#0f1416"
+      secondary-background-color: "#16201f"
+      app-header-background-color: "#122c2c"
+      app-header-text-color: "#f2f0ea"
+      card-background-color: "#1c2a2a"
+      ha-card-background: "rgba(232, 230, 223, 0.08)"
+      ha-card-backdrop-filter: "blur(18px) saturate(140%)"
+      ha-card-border-color: "rgba(232, 230, 223, 0.14)"
+      ha-card-box-shadow: "none"
+      primary-text-color: "#f2f0ea"
+      secondary-text-color: "#d6dad4"
+      disabled-text-color: "#9aa19b"
+      divider-color: "rgba(232, 230, 223, 0.16)"
+      primary-color: "#8fd8d2"
+      accent-color: "#8fd8d2"
+      text-primary-color: "#0f1416"            # text on light teal: ink, not white
+      state-active-color: "#8fd8d2"
+      state-icon-color: "#8fd8d2"
+      state-climate-cool-color: "#8fd8d2"
+      state-climate-dry-color: "#ecd06f"
+      state-climate-fan_only-color: "#bdeae6"
+      state-light-on-color: "#fde047"
+      state-switch-on-color: "#8fd8d2"
+      state-cover-active-color: "#8fd8d2"
+      error-color: "#f87171"
+      warning-color: "#fbbf24"
+      success-color: "#34d399"
+      info-color: "#8fd8d2"
+      sidebar-background-color: "#0f1416"
+      sidebar-selected-icon-color: "#8fd8d2"
+      sidebar-selected-text-color: "#8fd8d2"
+      code-editor-background-color: "#0f1416"
+
+# ── Dartec Glass Lite ────────────────────────────────────────────────────────
+# Glass without blur or transparency, for wall panels and slower tablets. The
+# same ground; the cards are the solid colour the glass cards average to, so it
+# costs no more to draw than an opaque theme.
+Dartec Glass Lite:
+  primary-color: "#1a6b6b"
+  accent-color: "#1a6b6b"
+  dark-primary-color: "#0f4f4f"
+  light-primary-color: "#e6f0f0"
+
+  ha-font-family-body: "'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
+  ha-font-family-heading: "'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
+  ha-font-family-code: "'Dartec Plex Mono', 'IBM Plex Mono', ui-monospace, Menlo, Consolas, 'Liberation Mono', monospace"
+
+  ha-card-border-radius: "14px"
+  ha-dialog-border-radius: "16px"
+  ha-card-border-width: "1px"
+
+  modes:
+    light:
+      lovelace-background: "linear-gradient(165deg, #d7e8e7 0%, #eef2ee 45%, #ebe9df 100%)"
+      primary-background-color: "#eef2ee"
+      secondary-background-color: "#e3e9e5"
+      app-header-background-color: "#e3ecea"
+      app-header-text-color: "#22251f"
+      card-background-color: "#f8f8f3"
+      ha-card-background: "#f8f8f3"
+      ha-card-backdrop-filter: "none"
+      ha-card-border-color: "#d9d4c4"
+      ha-card-box-shadow: "none"
+      primary-text-color: "#1d211c"
+      secondary-text-color: "#4a4f45"
+      disabled-text-color: "#61655a"
+      divider-color: "#d9d4c4"
+      primary-color: "#1a6b6b"
+      accent-color: "#1a6b6b"
+      text-primary-color: "#ffffff"
+      state-active-color: "#1a6b6b"
+      state-icon-color: "#1a6b6b"
+      state-climate-cool-color: "#1a6b6b"
+      state-climate-dry-color: "#8a6a12"
+      state-climate-fan_only-color: "#0f4f4f"
+      state-light-on-color: "#a88400"
+      state-switch-on-color: "#1a6b6b"
+      state-cover-active-color: "#1a6b6b"
+      error-color: "#dc2626"
+      warning-color: "#c96e05"          # #d97706 is 2.99:1 on this card
+      success-color: "#047857"
+      info-color: "#1a6b6b"
+      sidebar-background-color: "#eef2ee"
+      sidebar-selected-icon-color: "#1a6b6b"
+      sidebar-selected-text-color: "#1a6b6b"
+
+    dark:
+      lovelace-background: "radial-gradient(120% 90% at 15% 0%, #164645 0%, #0e3030 45%, #0d1214 100%)"
+      primary-background-color: "#0f1416"
+      secondary-background-color: "#16201f"
+      app-header-background-color: "#122c2c"
+      app-header-text-color: "#f2f0ea"
+      card-background-color: "#23302f"
+      ha-card-background: "#23302f"
+      ha-card-backdrop-filter: "none"
+      ha-card-border-color: "#34403f"
+      ha-card-box-shadow: "none"
+      primary-text-color: "#f2f0ea"
+      secondary-text-color: "#c3c8c2"
+      disabled-text-color: "#9aa19b"
+      divider-color: "#34403f"
+      primary-color: "#6cc7c0"
+      accent-color: "#6cc7c0"
+      text-primary-color: "#0f1416"            # text on light teal: ink, not white
+      state-active-color: "#6cc7c0"
+      state-icon-color: "#6cc7c0"
+      state-climate-cool-color: "#6cc7c0"
+      state-climate-dry-color: "#e3c25a"
+      state-climate-fan_only-color: "#a3e0db"
+      state-light-on-color: "#facc15"
+      state-switch-on-color: "#6cc7c0"
+      state-cover-active-color: "#6cc7c0"
+      error-color: "#f87171"
+      warning-color: "#fbbf24"
+      success-color: "#34d399"
+      info-color: "#6cc7c0"
+      sidebar-background-color: "#0f1416"
+      sidebar-selected-icon-color: "#6cc7c0"
+      sidebar-selected-text-color: "#6cc7c0"
+      code-editor-background-color: "#0f1416"
+
+# ── Dartec Soft ──────────────────────────────────────────────────────────────
+# Borderless paper cards that float on the brand's two-layer shadow in light
+# mode, and sit on a hairline instead of a shadow in dark mode.
+Dartec Soft:
+  primary-color: "#1a6b6b"
+  accent-color: "#1a6b6b"
+  dark-primary-color: "#0f4f4f"
+  light-primary-color: "#e6f0f0"
+
+  ha-font-family-body: "'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
+  ha-font-family-heading: "'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
+  ha-font-family-code: "'Dartec Plex Mono', 'IBM Plex Mono', ui-monospace, Menlo, Consolas, 'Liberation Mono', monospace"
+
+  ha-card-border-radius: "12px"
+  ha-dialog-border-radius: "14px"
+
+  modes:
+    light:
+      primary-background-color: "#f1f0ea"
+      secondary-background-color: "#e8e6dc"
+      card-background-color: "#fffdf8"         # paper
+      ha-card-border-width: "0px"
+      ha-card-box-shadow: "0 1px 2px rgba(34, 37, 31, 0.06), 0 6px 20px rgba(34, 37, 31, 0.07)"
+      primary-text-color: "#22251f"
+      secondary-text-color: "#52564c"
+      disabled-text-color: "#666a5c"
+      divider-color: "#e2ddcf"
+      primary-color: "#1a6b6b"
+      accent-color: "#1a6b6b"
+      text-primary-color: "#ffffff"
+      state-active-color: "#1a6b6b"
+      state-icon-color: "#1a6b6b"
+      state-climate-cool-color: "#1a6b6b"
+      state-climate-dry-color: "#8a6a12"
+      state-climate-fan_only-color: "#0f4f4f"
+      state-light-on-color: "#a88400"
+      state-switch-on-color: "#1a6b6b"
+      state-cover-active-color: "#1a6b6b"
+      error-color: "#dc2626"
+      warning-color: "#d97706"
+      success-color: "#047857"
+      info-color: "#1a6b6b"
+      sidebar-background-color: "#fffdf8"
+      sidebar-selected-icon-color: "#1a6b6b"
+      sidebar-selected-text-color: "#1a6b6b"
+
+    dark:
+      primary-background-color: "#17181a"
+      secondary-background-color: "#1f2124"
+      card-background-color: "#232529"
+      ha-card-border-width: "1px"
+      ha-card-border-color: "rgba(232, 230, 223, 0.07)"
+      ha-card-box-shadow: "none"
+      primary-text-color: "#e8e6df"
+      secondary-text-color: "#aeada4"
+      disabled-text-color: "#8a8a81"
+      divider-color: "#33353a"
+      primary-color: "#4db3ac"
+      accent-color: "#4db3ac"
+      text-primary-color: "#17181a"            # text on light teal: ink, not white
+      state-active-color: "#4db3ac"
+      state-icon-color: "#4db3ac"
+      state-climate-cool-color: "#4db3ac"
+      state-climate-dry-color: "#d9b44a"
+      state-climate-fan_only-color: "#7fd0c9"
+      state-light-on-color: "#facc15"
+      state-switch-on-color: "#4db3ac"
+      state-cover-active-color: "#4db3ac"
+      error-color: "#f87171"
+      warning-color: "#fbbf24"
+      success-color: "#34d399"
+      info-color: "#4db3ac"
+      sidebar-background-color: "#1e2024"
+      sidebar-selected-icon-color: "#4db3ac"
+      sidebar-selected-text-color: "#7fd0c9"
+      code-editor-background-color: "#17181a"
+
+# ── Dartec Material ──────────────────────────────────────────────────────────
+# Tonal surfaces: a Material 3 "tonal spot" scheme generated from the brand
+# teal #1A6B6B (materialyoucolor 3.0.4), with the dark ground lifted off
+# near-black to the brand's rule. 16px cards with no border or shadow. No
+# material-you JavaScript.
+Dartec Material:
+  primary-color: "#1b6969"
+  accent-color: "#1b6969"
+  dark-primary-color: "#0f4f4f"
+  light-primary-color: "#e6f0f0"
+
+  ha-font-family-body: "'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
+  ha-font-family-heading: "'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
+  ha-font-family-code: "'Dartec Plex Mono', 'IBM Plex Mono', ui-monospace, Menlo, Consolas, 'Liberation Mono', monospace"
+
+  ha-card-border-radius: "16px"
+  ha-dialog-border-radius: "24px"
+  ha-card-border-width: "0px"
+  ha-card-box-shadow: "none"
+
+  modes:
+    light:
+      primary-background-color: "#f6faf9"
+      secondary-background-color: "#e7f0ef"
+      app-header-background-color: "#e7f0ef"
+      app-header-text-color: "#2a3434"
+      card-background-color: "#e7f0ef"
+      primary-text-color: "#1f2828"
+      secondary-text-color: "#4c5757"
+      disabled-text-color: "#5f6a6a"
+      divider-color: "#a9b4b3"
+      primary-color: "#1b6969"
+      accent-color: "#1b6969"
+      text-primary-color: "#ffffff"
+      state-active-color: "#1b6969"
+      state-icon-color: "#1b6969"
+      state-climate-cool-color: "#1b6969"
+      state-climate-dry-color: "#7a5e10"
+      state-climate-fan_only-color: "#3a647d"
+      state-light-on-color: "#a88400"
+      state-switch-on-color: "#1b6969"
+      state-cover-active-color: "#1b6969"
+      error-color: "#a83836"
+      warning-color: "#c96e05"          # #d97706 is 2.75:1 on this card
+      success-color: "#047857"
+      info-color: "#1b6969"
+      sidebar-background-color: "#eef5f4"
+      sidebar-selected-icon-color: "#1b6969"
+      sidebar-selected-text-color: "#1b6969"
+
+    dark:
+      primary-background-color: "#111717"
+      secondary-background-color: "#192121"
+      app-header-background-color: "#192121"
+      app-header-text-color: "#dce8e7"
+      card-background-color: "#1d2827"
+      primary-text-color: "#dce8e7"
+      secondary-text-color: "#a8b3b3"
+      disabled-text-color: "#8a9595"
+      divider-color: "#3f4a4a"
+      primary-color: "#9bd0cf"
+      accent-color: "#9bd0cf"
+      text-primary-color: "#111717"            # text on light teal: ink, not white
+      state-active-color: "#9bd0cf"
+      state-icon-color: "#9bd0cf"
+      state-climate-cool-color: "#9bd0cf"
+      state-climate-dry-color: "#e3c25a"
+      state-climate-fan_only-color: "#d2ecff"
+      state-light-on-color: "#facc15"
+      state-switch-on-color: "#9bd0cf"
+      state-cover-active-color: "#9bd0cf"
+      error-color: "#fa746f"
+      warning-color: "#fbbf24"
+      success-color: "#34d399"
+      info-color: "#9bd0cf"
+      sidebar-background-color: "#131b1b"
+      sidebar-selected-icon-color: "#9bd0cf"
+      sidebar-selected-text-color: "#9bd0cf"
+      code-editor-background-color: "#111717"

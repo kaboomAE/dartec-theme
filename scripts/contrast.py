@@ -7,6 +7,20 @@ Each pair is a colour Home Assistant actually draws on another, with the bar
 WCAG AA sets for it: 4.5:1 for text, 3:1 for icons and controls (1.4.11).
 Variables a theme does not set fall back to Home Assistant's own defaults,
 following the var() chains in the frontend's color.globals.ts.
+
+Where a theme draws its cards or its view on more than one colour, every pair
+on a card or on the page is measured against each of them and the worst ratio
+is reported:
+
+- the view's ground is every colour along `lovelace-background` (each gradient
+  stop and ten steps between neighbouring stops) as well as
+  `primary-background-color`;
+- a translucent `ha-card-background` (glass) is blended over each colour of
+  that ground, and the solid `card-background-color` that dialogs and pop-ups
+  use is measured as well.
+
+A blur behind a glass card averages the ground's colours, so the worst single
+colour under it is the worst case.
 """
 import pathlib
 import re
@@ -86,7 +100,34 @@ def ratio(fg, bg):
     return (a + 0.05) / (b + 0.05)
 
 
-def resolve(values, key, seen=()):
+COLOUR = re.compile(r"#[0-9a-fA-F]{3,8}(?![0-9a-fA-F])|rgba?\([^)]*\)")
+
+
+def parse_colour(text):
+    """'#rgb', '#rrggbb', 'rgb(r, g, b)' or 'rgba(r, g, b, a)' as (r, g, b, a)."""
+    text = text.strip()
+    if text.startswith("#"):
+        h = text[1:]
+        if len(h) not in (3, 6):
+            raise ValueError(f"{text!r}: hex colours here are #rgb or #rrggbb")
+        if len(h) == 3:
+            h = "".join(c * 2 for c in h)
+        return (*(int(h[i:i + 2], 16) for i in (0, 2, 4)), 1.0)
+    m = re.fullmatch(r"rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)", text)
+    if not m:
+        raise ValueError(f"{text!r} is not a colour this script reads")
+    r, g, b = (float(m.group(i)) for i in (1, 2, 3))
+    a = float(m.group(4)) if m.group(4) is not None else 1.0
+    if not all(0 <= c <= 255 for c in (r, g, b)) or not 0 <= a <= 1:
+        raise ValueError(f"{text!r} is out of range")
+    return r, g, b, a
+
+
+def to_hex(rgb):
+    return "#" + "".join(f"{round(c):02x}" for c in rgb[:3])
+
+
+def resolve_raw(values, key, seen=()):
     if key in seen:
         raise ValueError(f"var() loop at {key}")
     value = values.get(key, HA_DEFAULTS.get(key))
@@ -95,10 +136,48 @@ def resolve(values, key, seen=()):
     value = str(value).strip()
     m = re.fullmatch(r"var\(--([\w-]+)\)", value)
     if m:
-        return resolve(values, m.group(1), seen + (key,))
+        return resolve_raw(values, m.group(1), seen + (key,))
+    return value
+
+
+def resolve(values, key):
+    value = resolve_raw(values, key)
     if not re.fullmatch(r"#[0-9a-fA-F]{3}([0-9a-fA-F]{3})?", value):
         raise ValueError(f"{key} is {value!r}; only opaque hex colours can be measured")
-    return value.lower()
+    return to_hex(parse_colour(value))
+
+
+def ground(values):
+    """Every colour the view's own background shows, opaque."""
+    colours = [parse_colour(resolve(values, "primary-background-color"))]
+    if "lovelace-background" in values:
+        stops = [parse_colour(c) for c in COLOUR.findall(resolve_raw(values, "lovelace-background"))]
+        if not stops:
+            raise ValueError("lovelace-background names no colour")
+        if any(s[3] < 1 for s in stops):
+            raise ValueError("lovelace-background has a translucent stop; cannot measure")
+        colours.append(stops[0])
+        for a, b in zip(stops, stops[1:]):
+            colours += [tuple(a[i] + (b[i] - a[i]) * t / 10 for i in range(4)) for t in range(1, 11)]
+    return colours
+
+
+def surfaces(values, key):
+    """The opaque colours a pair's background can be, as hex."""
+    if key == "primary-background-color":
+        found = ground(values)
+    elif key == "card-background-color":
+        found = [parse_colour(resolve(values, "card-background-color"))]
+        if "ha-card-background" in values:
+            r, g, b, a = parse_colour(resolve_raw(values, "ha-card-background"))
+            if a == 1:
+                found.append((r, g, b, 1.0))
+            else:
+                found += [(r * a + gr * (1 - a), g * a + gg * (1 - a), b * a + gb * (1 - a), 1.0)
+                          for gr, gg, gb, _ in ground(values)]
+    else:
+        return [resolve(values, key)]
+    return list(dict.fromkeys(to_hex(c) for c in found))
 
 
 def themes():
@@ -115,8 +194,11 @@ def main(markdown=False):
     rows, failures = [], 0
     for name, mode, values in themes():
         for label, fg, bg, bar in PAIRS:
-            f, b = resolve(values, fg), resolve(values, bg)
-            r = ratio(f, b)
+            f = resolve(values, fg)
+            under = surfaces(values, bg)
+            r, b = min((ratio(f, c), c) for c in under)
+            if len(under) > 1:
+                b = f"{b} (worst of {len(under)})"
             ok = r >= bar
             failures += not ok
             rows.append((name, mode, label, f, b, r, bar, ok))
@@ -125,7 +207,7 @@ def main(markdown=False):
         print("| Theme | Mode | Pair | Foreground | Background | Ratio | Bar | AA |")
         print("|---|---|---|---|---|---|---|---|")
         for name, mode, label, f, b, r, bar, ok in rows:
-            print(f"| {name} | {mode} | {label} | `{f}` | `{b}` | {r:.2f} | {bar:g} | {'pass' if ok else '**FAIL**'} |")
+            print(f"| {name} | {mode} | {label} | `{f}` | `{b.split()[0]}`{b[7:]} | {r:.2f} | {bar:g} | {'pass' if ok else '**FAIL**'} |")
         print()
         print("Brand reference (not drawn by these themes):")
         print()
@@ -133,7 +215,7 @@ def main(markdown=False):
             print(f"- {label}: {ratio(f, b):.2f}")
     else:
         for name, mode, label, f, b, r, bar, ok in rows:
-            print(f"{'ok  ' if ok else 'FAIL'} {name:18} {mode:5} {label:24} {f} on {b}  {r:5.2f} (>= {bar:g})")
+            print(f"{'ok  ' if ok else 'FAIL'} {name:18} {mode:5} {label:24} {f} on {b:22} {r:5.2f} (>= {bar:g})")
         print()
         for label, f, b in BRAND:
             print(f"brand  {label:36} {ratio(f, b):5.2f}")

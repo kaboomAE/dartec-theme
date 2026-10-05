@@ -6,10 +6,14 @@ The official [Dartec Smart Homes](https://dartec.ae) themes for Home Assistant, 
 |---|---|
 | **Dartec** | The house theme: brand teal on warm cream and paper. Teal for everything interactive, a readable gold for lights that are on. |
 | **Dartec Graphite** | Quiet warm-graphite surfaces with grey icons, and teal only where something is on. The theme for wall panels, and in dark mode for bedrooms at night. |
+| **Dartec Glass** | Frosted, translucent cards over a deep teal gradient. The most distinctive look, and the costliest to draw: for phones and capable tablets, not wall panels. |
+| **Dartec Glass Lite** | Glass's colours and gradient with solid cards and no blur, so it draws about as cheaply as an opaque theme. The Glass look for wall panels and slower tablets. |
+| **Dartec Soft** | Borderless paper cards that float on a soft shadow in light mode, with a hairline edge in dark mode. |
+| **Dartec Material** | Tonal surfaces generated from the brand teal with Material 3's colour method, in rounder 16 px cards with no border or shadow. |
 
 - **Light and dark** are both written in full; Home Assistant follows the device's setting.
 - **Theme variables only.** No card-mod, no JavaScript, no images, nothing downloaded.
-- **WCAG AA in both modes.** Text is at least 4.5:1 and icons and controls at least 3:1, checked on every change by [`scripts/contrast.py`](scripts/contrast.py).
+- **WCAG AA in both modes.** Text is at least 4.5:1 and icons and controls at least 3:1, checked on every change by [`scripts/contrast.py`](scripts/contrast.py). Where a view's ground is a gradient, or a card is glass, the worst place a card can sit is what is measured. [`scripts/check_themes.py`](scripts/check_themes.py) checks each theme's structure and every colour value.
 - **No copper.** The Dartec brand reserves copper for content written by AI.
 
 ## Screenshots
@@ -31,6 +35,17 @@ Home Assistant 2026.9 on Dartec's test bench, with the themes installed through 
 | ![Dartec Graphite, light](docs/screenshots/graphite-overview-light-en.webp) | ![Dartec Graphite, dark](docs/screenshots/graphite-overview-dark-en.webp) |
 | ![Dartec Graphite, device states, light](docs/screenshots/graphite-states-light.webp) | ![Dartec Graphite, dark, Arabic](docs/screenshots/graphite-overview-dark-ar.webp) |
 
+Screenshots of Glass, Glass Lite, Soft and Material are still to come.
+
+## Which theme where
+
+- **A home's default:** Dartec.
+- **Wall panels:** Dartec Graphite, or Dartec Glass Lite for the Glass look. Bedroom panels at night: Graphite in dark mode.
+- **Dartec Glass** blurs what is behind every card. Drawn without a graphics chip, as a stand-in for a weak tablet, the blur multiplied the drawing work about elevenfold and dropped a third of the frames while scrolling. Keep it to phones and capable tablets until it has been measured on the real panels, and give the panels Glass Lite.
+- **Soft and Material** are alternatives a family can pick for themselves.
+
+A theme picked in a person's own profile overrides the home's default, so a panel's own account can use one theme while the family's phones use another.
+
 ## Install
 
 Homes managed by Dartec HA Manager receive these themes automatically. To install them by hand:
@@ -41,7 +56,7 @@ Homes managed by Dartec HA Manager receive these themes automatically. To instal
    frontend:
      themes: !include_dir_merge_named themes
    ```
-3. Restart Home Assistant, then pick **Dartec** or **Dartec Graphite** in your profile, or let your Dartec installer set it for the home.
+3. Restart Home Assistant, then pick a Dartec theme in your profile, or let your Dartec installer set it for the home.
 
 Since Home Assistant 2026.2, a theme chosen in a person's own profile overrides the home's default theme.
 
@@ -49,7 +64,7 @@ Requires Home Assistant 2025.5 or later, the first release that reads the `ha-fo
 
 ## Fonts
 
-Both themes name Dartec's Arabic face, Lateef, and IBM Plex Mono for code. A theme can name a font but cannot load one, so these appear only on pages that load them; until then Arabic uses the device's own font. Latin text is Roboto, which Home Assistant ships itself. Dubai, the brand's Latin face, is not used: its licence does not allow it to be redistributed.
+Every theme names Dartec's Arabic face, Lateef, and IBM Plex Mono for code. A theme can name a font but cannot load one, so these appear only on pages that load them; until then Arabic uses the device's own font. Latin text is Roboto, which Home Assistant ships itself. Dubai, the brand's Latin face, is not used: its licence does not allow it to be redistributed.
 
 ## Licence
 
