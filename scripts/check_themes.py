@@ -13,7 +13,10 @@ for these themes:
   gradient made of those;
 - theme variables only: no card-mod, no JavaScript, no url() (no images or
   downloads);
-- no copper, which the brand reserves for content written by AI.
+- no copper, which the brand reserves for content written by AI;
+- every theme is published under its Baytec name and its Dartec name (the
+  company's name until 2026-10, which homes may still store as their default),
+  and the two are identical.
 """
 import pathlib
 import re
@@ -32,6 +35,9 @@ CORE = [
     "error-color", "warning-color", "success-color",
     "sidebar-background-color",
 ]
+
+# Theme names start with the brand, and every theme is shipped under both.
+BRAND_NAME, OLD_NAME = "Baytec", "Dartec"
 
 # The copper accents of v1.1.0 (light and dark).
 COPPER = {"#a8551f", "#e08b52"}
@@ -125,8 +131,8 @@ def check_file(path):
     for name, theme in data.items():
         names.append(name)
         where = f"{path.name}: {name}"
-        if not isinstance(name, str) or not name.startswith("Dartec"):
-            problems.append(f"{where}: theme names start with 'Dartec'")
+        if not isinstance(name, str) or not name.startswith((BRAND_NAME, OLD_NAME)):
+            problems.append(f"{where}: theme names start with '{BRAND_NAME}' or '{OLD_NAME}'")
         if not isinstance(theme, dict):
             problems.append(f"{where}: must be a map")
             continue
@@ -145,18 +151,46 @@ def check_file(path):
     return problems, names
 
 
+def twin_problems(themes):
+    """Every Baytec theme has a Dartec twin with the same content, and back.
+
+    A home stores its default theme by name. Dropping or changing a Dartec
+    name sends a home that stores it to Home Assistant's stock look, and a
+    Baytec theme that drifts from its twin changes the look on Apply.
+    """
+    problems = []
+    for name, theme in themes.items():
+        if not isinstance(name, str):
+            continue
+        for mine, other in ((BRAND_NAME, OLD_NAME), (OLD_NAME, BRAND_NAME)):
+            if name.startswith(mine):
+                twin = other + name[len(mine):]
+                if twin not in themes:
+                    problems.append(f"{name}: no {twin!r} beside it")
+                elif themes[twin] != theme:
+                    problems.append(f"{name}: differs from {twin!r}")
+    return problems
+
+
 def main():
     files = sorted((ROOT / "themes").glob("*.yaml"))
     if not files:
         print("no theme files in themes/")
         return 1
-    problems, names = [], []
+    problems, names, themes = [], [], {}
     for path in files:
         p, n = check_file(path)
         problems += p
         names += n
+        try:
+            data = yaml.safe_load(path.read_text(encoding="utf-8"))
+        except yaml.YAMLError:
+            continue
+        if isinstance(data, dict):
+            themes.update(data)
     if len(names) != len(set(names)):
         problems.append("a theme name is used twice across files")
+    problems += twin_problems(themes)
     for p in problems:
         print(f"FAIL {p}")
     print(f"{len(names)} themes in {len(files)} file(s): {', '.join(names)}")

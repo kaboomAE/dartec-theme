@@ -1,30 +1,36 @@
 ---
-# The Dartec Smart Homes themes for Home Assistant.
+# The Baytec Smart Homes themes for Home Assistant.
 #
-#   Dartec           the house theme: teal on warm cream and paper.
-#   Dartec Graphite  quiet neutral surfaces, teal only where something is on.
+#   Baytec           the house theme: teal on warm cream and paper.
+#   Baytec Graphite  quiet neutral surfaces, teal only where something is on.
 #                    The panel and night theme.
-#   Dartec Glass     frosted cards over a teal gradient ground. Blur is costly
+#   Baytec Glass     frosted cards over a teal gradient ground. Blur is costly
 #                    to draw: not for wall panels.
-#   Dartec Glass Lite  Glass without blur or transparency, for wall panels and
+#   Baytec Glass Lite  Glass without blur or transparency, for wall panels and
 #                    slower tablets.
-#   Dartec Soft      borderless paper cards with a soft shadow.
-#   Dartec Material  tonal surfaces generated from the brand teal.
+#   Baytec Soft      borderless paper cards with a soft shadow.
+#   Baytec Material  tonal surfaces generated from the brand teal.
 #
-# Homes store their default theme by name, so these names never change. Every
-# theme sets light and dark in full, uses theme variables only (no card-mod, no
-# JavaScript, no images), and passes WCAG AA in both modes: see
+# Homes store their default theme by name, so a name, once shipped, never
+# changes or goes away. The company was Dartec until 2026-10: every theme is
+# also published under its Dartec name, at the end of this file, as a YAML
+# alias of its Baytec twin, so the two are the same theme by construction.
+# A home that stores "Dartec" keeps its look; an Apply moves it to "Baytec".
+#
+# Every theme sets light and dark in full, uses theme variables only (no
+# card-mod, no JavaScript, no images), and passes WCAG AA in both modes: see
 # scripts/contrast.py. Copper is not used: the brand reserves it for content
 # written by AI.
 #
 # Fonts: 'Dartec Lateef' (Arabic only) and 'Dartec Plex Mono' render only where
-# a page loads them (kaboomAE/dartec-ha-manager#59). Latin text is Roboto, which
-# Home Assistant ships itself; until Lateef loads, Arabic uses the device's own
-# font. Dubai, the brand's Latin face, is not named: its licence does not allow
-# it to be redistributed.
+# a page loads them (kaboomAE/dartec-ha-manager#59). They are the agent's own
+# font names, internal, and keep the old name. Latin text is Roboto, which Home
+# Assistant ships itself; until Lateef loads, Arabic uses the device's own font.
+# Dubai, the brand's Latin face, is not named: its licence does not allow it to
+# be redistributed.
 
-# ── Dartec ───────────────────────────────────────────────────────────────────
-Dartec:
+# ── Baytec ───────────────────────────────────────────────────────────────────
+Baytec: &baytec
   primary-color: "#1a6b6b"
   accent-color: "#1a6b6b"
   dark-primary-color: "#0f4f4f"
@@ -35,7 +41,7 @@ Dartec:
   ha-font-family-heading: "'Dartec Lateef', Roboto, Noto, system-ui, sans-serif"
   ha-font-family-code: "'Dartec Plex Mono', 'IBM Plex Mono', ui-monospace, Menlo, Consolas, 'Liberation Mono', monospace"
 
-  # Shape: tight radii, matching the Dartec system
+  # Shape: tight radii, matching the design system
   ha-card-border-radius: "8px"
   ha-dialog-border-radius: "10px"
 
@@ -103,10 +109,10 @@ Dartec:
       sidebar-selected-text-color: "#7fd0c9"
       code-editor-background-color: "#17181a"
 
-# ── Dartec Graphite ──────────────────────────────────────────────────────────
+# ── Baytec Graphite ──────────────────────────────────────────────────────────
 # Grey icons while a device is off, teal only when it is on, so a dark bedroom
 # panel shows colour only where something is running. The night theme.
-Dartec Graphite:
+Baytec Graphite: &baytec-graphite
   primary-color: "#1a6b6b"
   accent-color: "#1a6b6b"
   dark-primary-color: "#0f4f4f"
@@ -183,7 +189,7 @@ Dartec Graphite:
       sidebar-selected-text-color: "#5fb8b1"
       code-editor-background-color: "#121314"
 
-# ── Dartec Glass ─────────────────────────────────────────────────────────────
+# ── Baytec Glass ─────────────────────────────────────────────────────────────
 # Frosted cards over a teal gradient ground: ha-card-background is translucent
 # and ha-card-backdrop-filter blurs what is behind it. The ground is a gradient,
 # not a photograph, so nothing is downloaded. Contrast is measured on the card
@@ -191,7 +197,7 @@ Dartec Graphite:
 # the blur multiplied the drawing work about elevenfold: wall panels take Glass
 # Lite.
 # The top bar stays solid.
-Dartec Glass:
+Baytec Glass: &baytec-glass
   primary-color: "#1a6b6b"
   accent-color: "#1a6b6b"
   dark-primary-color: "#0f4f4f"
@@ -276,11 +282,11 @@ Dartec Glass:
       sidebar-selected-text-color: "#8fd8d2"
       code-editor-background-color: "#0f1416"
 
-# ── Dartec Glass Lite ────────────────────────────────────────────────────────
+# ── Baytec Glass Lite ────────────────────────────────────────────────────────
 # Glass without blur or transparency, for wall panels and slower tablets. The
 # same ground; the cards are the solid colour the glass cards average to, so it
 # costs no more to draw than an opaque theme.
-Dartec Glass Lite:
+Baytec Glass Lite: &baytec-glass-lite
   primary-color: "#1a6b6b"
   accent-color: "#1a6b6b"
   dark-primary-color: "#0f4f4f"
@@ -364,10 +370,10 @@ Dartec Glass Lite:
       sidebar-selected-text-color: "#6cc7c0"
       code-editor-background-color: "#0f1416"
 
-# ── Dartec Soft ──────────────────────────────────────────────────────────────
+# ── Baytec Soft ──────────────────────────────────────────────────────────────
 # Borderless paper cards that float on the brand's two-layer shadow in light
 # mode, and sit on a hairline instead of a shadow in dark mode.
-Dartec Soft:
+Baytec Soft: &baytec-soft
   primary-color: "#1a6b6b"
   accent-color: "#1a6b6b"
   dark-primary-color: "#0f4f4f"
@@ -441,12 +447,12 @@ Dartec Soft:
       sidebar-selected-text-color: "#7fd0c9"
       code-editor-background-color: "#17181a"
 
-# ── Dartec Material ──────────────────────────────────────────────────────────
+# ── Baytec Material ──────────────────────────────────────────────────────────
 # Tonal surfaces: a Material 3 "tonal spot" scheme generated from the brand
 # teal #1A6B6B (materialyoucolor 3.0.4), with the dark ground lifted off
 # near-black to the brand's rule. 16px cards with no border or shadow. No
 # material-you JavaScript.
-Dartec Material:
+Baytec Material: &baytec-material
   primary-color: "#1b6969"
   accent-color: "#1b6969"
   dark-primary-color: "#0f4f4f"
@@ -520,3 +526,15 @@ Dartec Material:
       sidebar-selected-icon-color: "#9bd0cf"
       sidebar-selected-text-color: "#9bd0cf"
       code-editor-background-color: "#111717"
+
+# ── The Dartec names ────────────────────────────────────────────────────────
+# Kept for the homes that store one as their default (see the top of the file).
+# Each is an alias, not a copy: it cannot drift from its Baytec twin.
+# scripts/check_themes.py checks that every Baytec theme has its Dartec name
+# and the two are identical. Remove a line only once no home stores the name.
+Dartec: *baytec
+Dartec Graphite: *baytec-graphite
+Dartec Glass: *baytec-glass
+Dartec Glass Lite: *baytec-glass-lite
+Dartec Soft: *baytec-soft
+Dartec Material: *baytec-material
