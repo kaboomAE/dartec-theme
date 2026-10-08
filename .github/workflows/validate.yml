@@ -17,7 +17,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          # 3.13: annotatedyaml 1.x, the loader Home Assistant ships, needs it.
+          python-version: "3.13"
       - run: pip install pyyaml annotatedyaml==1.0.2
       - run: python scripts/check_themes.py
       # Home Assistant's own YAML loader: the Dartec names are aliases.
