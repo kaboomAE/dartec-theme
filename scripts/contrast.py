@@ -21,6 +21,10 @@ is reported:
 
 A blur behind a glass card averages the ground's colours, so the worst single
 colour under it is the worst case.
+
+Every theme ships under its Baytec name and its old Dartec name. A name whose
+theme is identical to one already measured is listed as the same theme rather
+than measured twice; one that differs in any way is measured on its own.
 """
 import pathlib
 import re
@@ -180,9 +184,18 @@ def surfaces(values, key):
     return list(dict.fromkeys(to_hex(c) for c in found))
 
 
-def themes():
+def themes(same=None):
+    """(name, mode, values) for each distinct theme. Names whose theme is
+    identical to one already yielded go into `same` as (name, first name)."""
+    seen = []
     for path in sorted((ROOT / "themes").glob("*.yaml")):
         for name, theme in yaml.safe_load(path.read_text(encoding="utf-8")).items():
+            first = next((n for n, t in seen if t == theme), None)
+            if first is not None:
+                if same is not None:
+                    same.append((name, first))
+                continue
+            seen.append((name, theme))
             base = {k: v for k, v in theme.items() if k != "modes"}
             for mode in ("light", "dark"):
                 if mode not in theme.get("modes", {}):
@@ -191,8 +204,8 @@ def themes():
 
 
 def main(markdown=False):
-    rows, failures = [], 0
-    for name, mode, values in themes():
+    rows, failures, same = [], 0, []
+    for name, mode, values in themes(same):
         for label, fg, bg, bar in PAIRS:
             f = resolve(values, fg)
             under = surfaces(values, bg)
@@ -219,6 +232,9 @@ def main(markdown=False):
         print()
         for label, f, b in BRAND:
             print(f"brand  {label:36} {ratio(f, b):5.2f}")
+    print()
+    for name, first in same:
+        print(f"{name} is {first} under its old name: the same theme, measured once.")
     print()
     print(f"{len(rows) - failures} of {len(rows)} pairs pass WCAG AA.")
     return 1 if failures else 0

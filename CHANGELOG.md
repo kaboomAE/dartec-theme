@@ -1,6 +1,22 @@
 # Changelog
 
-Each version is a GitHub release with a tag of the same name; HACS installs the release, not the branch. Theme names never change between versions, because homes store their default theme by name.
+Each version is a GitHub release with a tag of the same name; HACS installs the release, not the branch. A theme name, once shipped, never changes or goes away while a home may store it, because homes store their default theme by name.
+
+## v1.4.0
+
+The company is now **Baytec** («بيتك»; it was Dartec). Every theme is added under its Baytec name, and every Dartec name stays.
+
+- **New names:** Baytec, Baytec Graphite, Baytec Glass, Baytec Glass Lite, Baytec Soft and Baytec Material.
+- **Nothing changes in how any theme looks.** Each Dartec name is now a YAML alias of its Baytec twin in `themes/dartec.yaml`, so the two are the same theme by construction, and every theme's content is byte-for-byte the v1.3.0 one.
+- **No home changes by itself.** A home keeps whatever name it stores as its default. The manager's Apply moves a home to the Baytec name; until then the Dartec name keeps it looking exactly as it does. A Dartec name is removed only once no home stores it, in a later version.
+- The font names `'Dartec Lateef'` and `'Dartec Plex Mono'` are the agent's own and stay as they are.
+- HACS shows the repository as "Baytec Theme". The repository is still `kaboomAE/dartec-theme`.
+
+### Checks
+
+- `scripts/check_themes.py` accepts names that start with Baytec or Dartec, and fails if a Baytec theme has no Dartec twin, a Dartec theme has no Baytec twin, or the two differ in anything.
+- `scripts/contrast.py` measures each distinct theme once and lists each Dartec name as the same theme as its Baytec twin; a Dartec name that ever differed would be measured on its own. **252 of 252 pairs pass WCAG AA**, the same figures as v1.3.0.
+- The file loads through Home Assistant's own YAML loader (`annotatedyaml`, C loader) under `!include_dir_merge_named`, with all twelve names resolved.
 
 ## v1.3.0
 
