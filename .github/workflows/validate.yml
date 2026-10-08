@@ -18,8 +18,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install pyyaml
+      - run: pip install pyyaml annotatedyaml==1.0.2
       - run: python scripts/check_themes.py
+      # Home Assistant's own YAML loader: the Dartec names are aliases.
+      - run: python scripts/check_ha_loader.py
       - run: python scripts/contrast.py
       - name: LICENSE is present
         run: test -s LICENSE

@@ -16,7 +16,7 @@ The company is now **Baytec** («بيتك»; it was Dartec). Every theme is adde
 
 - `scripts/check_themes.py` accepts names that start with Baytec or Dartec, and fails if a Baytec theme has no Dartec twin, a Dartec theme has no Baytec twin, or the two differ in anything.
 - `scripts/contrast.py` measures each distinct theme once and lists each Dartec name as the same theme as its Baytec twin; a Dartec name that ever differed would be measured on its own. **252 of 252 pairs pass WCAG AA**, the same figures as v1.3.0.
-- The file loads through Home Assistant's own YAML loader (`annotatedyaml`, C loader) under `!include_dir_merge_named`, with all twelve names resolved.
+- New `scripts/check_ha_loader.py`, run in CI: the file loads through Home Assistant's own YAML loader (`annotatedyaml` 1.0.2, C loader) under `!include_dir_merge_named`, laid out as HACS installs it, and every name arrives with each Dartec name equal to its Baytec twin. Checked as well inside the Home Assistant 2026.9.3 and 2026.10.0b1 images: `homeassistant.util.yaml` loads all twelve and every one passes the frontend's `THEME_SCHEMA`.
 
 ## v1.3.0
 
