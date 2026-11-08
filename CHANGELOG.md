@@ -2,6 +2,22 @@
 
 Each version is a GitHub release with a tag of the same name; HACS installs the release, not the branch. A theme name, once shipped, never changes or goes away while a home may store it, because homes store their default theme by name.
 
+## v1.5.0
+
+The company is now **Sakntec** («سكنتك»; it was Baytec, and before that Dartec). Every theme is added under its Sakntec name, and every Baytec and Dartec name stays.
+
+- **New names:** Sakntec, Sakntec Graphite, Sakntec Glass, Sakntec Glass Lite, Sakntec Soft and Sakntec Material.
+- **Nothing changes in how any theme looks.** The theme blocks in `themes/dartec.yaml` now carry the Sakntec names, and each Baytec and Dartec name is a YAML alias of its Sakntec twin, so the three are the same theme by construction. Every theme's content is the v1.4.0 one.
+- **No home changes by itself.** A home keeps whatever name it stores as its default. The manager's Apply moves a home to the Sakntec name; until then the Baytec or Dartec name keeps it looking exactly as it does. An old name is removed only once no home stores it, in a later version.
+- The font names `'Dartec Lateef'` and `'Dartec Plex Mono'` are the agent's own and stay as they are.
+- HACS shows the repository as "Sakntec Theme". The repository is still `kaboomAE/dartec-theme`.
+
+### Checks
+
+- `scripts/check_themes.py` accepts names that start with Sakntec, Baytec or Dartec, and fails if a theme under any of the three is missing its twin under either of the others, or differs from it in anything.
+- `scripts/contrast.py` measures each distinct theme once and lists each Baytec and Dartec name as the same theme as its Sakntec twin. **252 of 252 pairs pass WCAG AA**, the same figures as v1.4.0.
+- `scripts/check_ha_loader.py`: Home Assistant's own loader (`annotatedyaml` 1.0.2, C loader) loads all eighteen names, each Baytec and Dartec name equal to its Sakntec twin.
+
 ## v1.4.0
 
 The company is now **Baytec** («بيتك»; it was Dartec). Every theme is added under its Baytec name, and every Dartec name stays.

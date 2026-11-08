@@ -22,9 +22,10 @@ is reported:
 A blur behind a glass card averages the ground's colours, so the worst single
 colour under it is the worst case.
 
-Every theme ships under its Baytec name and its old Dartec name. A name whose
-theme is identical to one already measured is listed as the same theme rather
-than measured twice; one that differs in any way is measured on its own.
+Every theme ships under its Sakntec name and its old Baytec and Dartec names. A
+name whose theme is identical to one already measured is listed as the same
+theme rather than measured twice; one that differs in any way is measured on
+its own.
 """
 import pathlib
 import re

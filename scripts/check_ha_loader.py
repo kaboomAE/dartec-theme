@@ -3,13 +3,13 @@
     pip install annotatedyaml==1.0.2   # Home Assistant's own YAML loader
     python scripts/check_ha_loader.py  # exit 1 on any problem
 
-The Dartec names are YAML aliases of the Baytec blocks. PyYAML resolves them,
+The Baytec and Dartec names are YAML aliases of the Sakntec blocks. PyYAML resolves them,
 but Home Assistant reads theme files through its own loader (annotatedyaml,
 the C loader where it is available) under `!include_dir_merge_named themes`,
 as HACS installs them into `themes/<repository>/`. This builds that layout in
 a temporary folder, loads it through that loader, and checks that every theme
-in the file arrives under its own name, with each Dartec name equal to its
-Baytec twin.
+in the file arrives under its own name, with each Baytec and Dartec name equal
+to its Sakntec twin.
 """
 import pathlib
 import shutil
@@ -20,7 +20,7 @@ import yaml
 from annotatedyaml import loader
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-BRAND_NAME, OLD_NAME = "Baytec", "Dartec"
+BRAND_NAME, *OLD_NAMES = ("Sakntec", "Baytec", "Dartec")
 
 
 def main():
@@ -42,10 +42,11 @@ def main():
             problems.append(f"{name}: not loaded")
         elif dict(themes[name]) != theme:
             problems.append(f"{name}: loaded differently from the file")
-        if name.startswith(OLD_NAME):
-            twin = BRAND_NAME + name[len(OLD_NAME):]
-            if twin in themes and themes[name] != themes[twin]:
-                problems.append(f"{name}: differs from {twin} as Home Assistant loads it")
+        for old in OLD_NAMES:
+            if name.startswith(old):
+                twin = BRAND_NAME + name[len(old):]
+                if twin in themes and themes[name] != themes[twin]:
+                    problems.append(f"{name}: differs from {twin} as Home Assistant loads it")
     for p in problems:
         print(f"FAIL {p}")
     c_loader = getattr(loader, "HAS_C_LOADER", None)
