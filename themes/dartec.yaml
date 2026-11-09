@@ -1,21 +1,22 @@
 ---
-# The Baytec Smart Homes themes for Home Assistant.
+# The Sakntec themes for Home Assistant.
 #
-#   Baytec           the house theme: teal on warm cream and paper.
-#   Baytec Graphite  quiet neutral surfaces, teal only where something is on.
-#                    The panel and night theme.
-#   Baytec Glass     frosted cards over a teal gradient ground. Blur is costly
-#                    to draw: not for wall panels.
-#   Baytec Glass Lite  Glass without blur or transparency, for wall panels and
-#                    slower tablets.
-#   Baytec Soft      borderless paper cards with a soft shadow.
-#   Baytec Material  tonal surfaces generated from the brand teal.
+#   Sakntec           the house theme: teal on warm cream and paper.
+#   Sakntec Graphite  quiet neutral surfaces, teal only where something is on.
+#                     The panel and night theme.
+#   Sakntec Glass     frosted cards over a teal gradient ground. Blur is costly
+#                     to draw: not for wall panels.
+#   Sakntec Glass Lite  Glass without blur or transparency, for wall panels and
+#                     slower tablets.
+#   Sakntec Soft      borderless paper cards with a soft shadow.
+#   Sakntec Material  tonal surfaces generated from the brand teal.
 #
 # Homes store their default theme by name, so a name, once shipped, never
-# changes or goes away. The company was Dartec until 2026-10: every theme is
-# also published under its Dartec name, at the end of this file, as a YAML
-# alias of its Baytec twin, so the two are the same theme by construction.
-# A home that stores "Dartec" keeps its look; an Apply moves it to "Baytec".
+# changes or goes away. The company was Dartec until 2026-10 and Baytec until
+# 2026-11: every theme is also published under its Baytec and its Dartec name,
+# at the end of this file, as YAML aliases of its Sakntec twin, so the three
+# are the same theme by construction. A home that stores "Baytec" or "Dartec"
+# keeps its look; an Apply moves it to "Sakntec".
 #
 # Every theme sets light and dark in full, uses theme variables only (no
 # card-mod, no JavaScript, no images), and passes WCAG AA in both modes: see
@@ -29,8 +30,8 @@
 # Dubai, the brand's Latin face, is not named: its licence does not allow it to
 # be redistributed.
 
-# ── Baytec ───────────────────────────────────────────────────────────────────
-Baytec: &baytec
+# ── Sakntec ──────────────────────────────────────────────────────────────────
+Sakntec: &sakntec
   primary-color: "#1a6b6b"
   accent-color: "#1a6b6b"
   dark-primary-color: "#0f4f4f"
@@ -109,10 +110,10 @@ Baytec: &baytec
       sidebar-selected-text-color: "#7fd0c9"
       code-editor-background-color: "#17181a"
 
-# ── Baytec Graphite ──────────────────────────────────────────────────────────
+# ── Sakntec Graphite ─────────────────────────────────────────────────────────
 # Grey icons while a device is off, teal only when it is on, so a dark bedroom
 # panel shows colour only where something is running. The night theme.
-Baytec Graphite: &baytec-graphite
+Sakntec Graphite: &sakntec-graphite
   primary-color: "#1a6b6b"
   accent-color: "#1a6b6b"
   dark-primary-color: "#0f4f4f"
@@ -189,7 +190,7 @@ Baytec Graphite: &baytec-graphite
       sidebar-selected-text-color: "#5fb8b1"
       code-editor-background-color: "#121314"
 
-# ── Baytec Glass ─────────────────────────────────────────────────────────────
+# ── Sakntec Glass ────────────────────────────────────────────────────────────
 # Frosted cards over a teal gradient ground: ha-card-background is translucent
 # and ha-card-backdrop-filter blurs what is behind it. The ground is a gradient,
 # not a photograph, so nothing is downloaded. Contrast is measured on the card
@@ -197,7 +198,7 @@ Baytec Graphite: &baytec-graphite
 # the blur multiplied the drawing work about elevenfold: wall panels take Glass
 # Lite.
 # The top bar stays solid.
-Baytec Glass: &baytec-glass
+Sakntec Glass: &sakntec-glass
   primary-color: "#1a6b6b"
   accent-color: "#1a6b6b"
   dark-primary-color: "#0f4f4f"
@@ -282,11 +283,11 @@ Baytec Glass: &baytec-glass
       sidebar-selected-text-color: "#8fd8d2"
       code-editor-background-color: "#0f1416"
 
-# ── Baytec Glass Lite ────────────────────────────────────────────────────────
+# ── Sakntec Glass Lite ───────────────────────────────────────────────────────
 # Glass without blur or transparency, for wall panels and slower tablets. The
 # same ground; the cards are the solid colour the glass cards average to, so it
 # costs no more to draw than an opaque theme.
-Baytec Glass Lite: &baytec-glass-lite
+Sakntec Glass Lite: &sakntec-glass-lite
   primary-color: "#1a6b6b"
   accent-color: "#1a6b6b"
   dark-primary-color: "#0f4f4f"
@@ -370,10 +371,10 @@ Baytec Glass Lite: &baytec-glass-lite
       sidebar-selected-text-color: "#6cc7c0"
       code-editor-background-color: "#0f1416"
 
-# ── Baytec Soft ──────────────────────────────────────────────────────────────
+# ── Sakntec Soft ─────────────────────────────────────────────────────────────
 # Borderless paper cards that float on the brand's two-layer shadow in light
 # mode, and sit on a hairline instead of a shadow in dark mode.
-Baytec Soft: &baytec-soft
+Sakntec Soft: &sakntec-soft
   primary-color: "#1a6b6b"
   accent-color: "#1a6b6b"
   dark-primary-color: "#0f4f4f"
@@ -447,12 +448,12 @@ Baytec Soft: &baytec-soft
       sidebar-selected-text-color: "#7fd0c9"
       code-editor-background-color: "#17181a"
 
-# ── Baytec Material ──────────────────────────────────────────────────────────
+# ── Sakntec Material ─────────────────────────────────────────────────────────
 # Tonal surfaces: a Material 3 "tonal spot" scheme generated from the brand
 # teal #1A6B6B (materialyoucolor 3.0.4), with the dark ground lifted off
 # near-black to the brand's rule. 16px cards with no border or shadow. No
 # material-you JavaScript.
-Baytec Material: &baytec-material
+Sakntec Material: &sakntec-material
   primary-color: "#1b6969"
   accent-color: "#1b6969"
   dark-primary-color: "#0f4f4f"
@@ -527,14 +528,21 @@ Baytec Material: &baytec-material
       sidebar-selected-text-color: "#9bd0cf"
       code-editor-background-color: "#111717"
 
-# ── The Dartec names ────────────────────────────────────────────────────────
+# ── The Baytec and Dartec names ─────────────────────────────────────────────
 # Kept for the homes that store one as their default (see the top of the file).
-# Each is an alias, not a copy: it cannot drift from its Baytec twin.
-# scripts/check_themes.py checks that every Baytec theme has its Dartec name
-# and the two are identical. Remove a line only once no home stores the name.
-Dartec: *baytec
-Dartec Graphite: *baytec-graphite
-Dartec Glass: *baytec-glass
-Dartec Glass Lite: *baytec-glass-lite
-Dartec Soft: *baytec-soft
-Dartec Material: *baytec-material
+# Each is an alias, not a copy: it cannot drift from its Sakntec twin.
+# scripts/check_themes.py checks that every Sakntec theme has its Baytec and
+# Dartec names and that all three are identical. Remove a line only once no
+# home stores the name.
+Baytec: *sakntec
+Dartec: *sakntec
+Baytec Graphite: *sakntec-graphite
+Dartec Graphite: *sakntec-graphite
+Baytec Glass: *sakntec-glass
+Dartec Glass: *sakntec-glass
+Baytec Glass Lite: *sakntec-glass-lite
+Dartec Glass Lite: *sakntec-glass-lite
+Baytec Soft: *sakntec-soft
+Dartec Soft: *sakntec-soft
+Baytec Material: *sakntec-material
+Dartec Material: *sakntec-material

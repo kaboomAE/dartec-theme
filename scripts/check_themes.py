@@ -14,9 +14,9 @@ for these themes:
 - theme variables only: no card-mod, no JavaScript, no url() (no images or
   downloads);
 - no copper, which the brand reserves for content written by AI;
-- every theme is published under its Baytec name and its Dartec name (the
-  company's name until 2026-10, which homes may still store as their default),
-  and the two are identical.
+- every theme is published under its Sakntec name, its Baytec name (the
+  company's name until 2026-11) and its Dartec name (until 2026-10), which homes
+  may still store as their default, and the three are identical.
 """
 import pathlib
 import re
@@ -36,8 +36,9 @@ CORE = [
     "sidebar-background-color",
 ]
 
-# Theme names start with the brand, and every theme is shipped under both.
-BRAND_NAME, OLD_NAME = "Baytec", "Dartec"
+# Theme names start with the brand, and every theme is shipped under each of
+# these: the current name first, then the names homes may still store.
+BRAND_NAME, *OLD_NAMES = NAMES = ("Sakntec", "Baytec", "Dartec")
 
 # The copper accents of v1.1.0 (light and dark).
 COPPER = {"#a8551f", "#e08b52"}
@@ -131,8 +132,8 @@ def check_file(path):
     for name, theme in data.items():
         names.append(name)
         where = f"{path.name}: {name}"
-        if not isinstance(name, str) or not name.startswith((BRAND_NAME, OLD_NAME)):
-            problems.append(f"{where}: theme names start with '{BRAND_NAME}' or '{OLD_NAME}'")
+        if not isinstance(name, str) or not name.startswith(NAMES):
+            problems.append(f"{where}: theme names start with {' or '.join(map(repr, NAMES))}")
         if not isinstance(theme, dict):
             problems.append(f"{where}: must be a map")
             continue
@@ -152,18 +153,22 @@ def check_file(path):
 
 
 def twin_problems(themes):
-    """Every Baytec theme has a Dartec twin with the same content, and back.
+    """Every theme has a twin under each brand name, with the same content.
 
-    A home stores its default theme by name. Dropping or changing a Dartec
-    name sends a home that stores it to Home Assistant's stock look, and a
-    Baytec theme that drifts from its twin changes the look on Apply.
+    A home stores its default theme by name. Dropping or changing a Baytec or
+    Dartec name sends a home that stores it to Home Assistant's stock look,
+    and a Sakntec theme that drifts from its twins changes the look on Apply.
     """
     problems = []
     for name, theme in themes.items():
         if not isinstance(name, str):
             continue
-        for mine, other in ((BRAND_NAME, OLD_NAME), (OLD_NAME, BRAND_NAME)):
-            if name.startswith(mine):
+        for mine in NAMES:
+            if not name.startswith(mine):
+                continue
+            for other in NAMES:
+                if other == mine:
+                    continue
                 twin = other + name[len(mine):]
                 if twin not in themes:
                     problems.append(f"{name}: no {twin!r} beside it")
